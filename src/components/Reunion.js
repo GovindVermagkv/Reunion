@@ -5,26 +5,25 @@ import Fevorite from "./Fevorite";
 
 import '../App.css'
 
-const Reunion = () => {
 
+const Reunion = ({fevProperty,setfevProperty}) => {
 
+  const [SearchedData, SetSearchedData] = useState([]);
 
   const [data, SetData] = useState([]);
   const [query, setquery] = useState("");
 
   const [item, setItem] = useState([])
 
-  const [price,setprice]=useState({"lowerlimit":null,"upperlimit":null,})
+  const [price, setprice] = useState({ "lowerlimit": null, "upperlimit": null, })
 
-  const [filter,setfilter]= useState({
-    "Location":"",
-    "Type":"",
-    "date":"",
-   
+  const [filter, setfilter] = useState({
+    "Location": "",
+    "Type": "",
+    "date": "",
+
+
   })
-
-
-
 
 
   useEffect(() => {
@@ -32,51 +31,54 @@ const Reunion = () => {
       .then((responce) => {
         SetData(responce.data);
         setItem(responce.data)
-        // console.log(responce.data);
+        SetSearchedData(responce.data)
       })
   }, [])
 
 
-//   const filteration = data.filter(user => user.PropertName.toLowerCase().includes(query));
+  useEffect(() => {
+    SetSearchedData(item.filter(user => user.PropertName.toLowerCase().includes(query)))
+    SetData(item.filter(user => user.PropertName.toLowerCase().includes(query)))
 
-  const handleChange=(e)=>{
-    setfilter({...filter, [e.target.name]: e.target.value})
+  }, [query])
+
+  const handleChange = (e) => {
+    setfilter({ ...filter, [e.target.name]: e.target.value })
 
 
   }
-  const handlePriceChange=(e)=>{
-    setprice({"lowerlimit":(parseInt(e.target.value).split("-")[0]),"upperlimit":(parseInt(e.target.value)).split("-")[1]})
-
+  const handlePriceChange = (e) => {
+    setprice({
+      lowerlimit: parseInt(e.target.value.split("-")[0]),
+      upperlimit: parseInt(e.target.value.split("-")[1])
+    })
 
   }
 
-//   const Convert=()=>{
-//   return(
-    
-//     console.log((data.price.split("$","")))
-//   )
-//   }
-
-
-
-
-
-  const filterSearch=()=>{
-
-const FilteredData =item.filter((result)=>{
-  if((filter.Location==="" || result.city===filter.Location) && (filter.Type==="" || result.category===filter.Type) && (price.lowerlimit===null || price.lowerlimit<result.price) && (price.upperlimit===null || result.price<price.upperlimit)){
-    return result;
+  const convertToNumber = (number) => {
+    return (parseInt(number.split("$")[1].replace(/,/g, "")))
   }
 
-})
-console.log(FilteredData);
-SetData(FilteredData)
+
+
+
+  const filterSearch = () => {
+
+    const FilteredData = SearchedData.filter((result) => {
+      if ((filter.Location === "" || result.city === filter.Location) &&
+        (filter.Type === "" || result.category === filter.Type) &&
+        (((price.lowerlimit === null) || (price.upperlimit === null) || (price.lowerlimit < convertToNumber(result.price))) && (convertToNumber(result.price) < price.upperlimit))) {
+        return result;
+      }
+    })
+    SetData(FilteredData)
   }
+
 
   return (
     <>
       <div id="main_container">
-        
+
         <div id="content_container">
           <main>
             <div id="Searchbar">
@@ -101,12 +103,12 @@ SetData(FilteredData)
               <div>
                 <p>Price</p>
                 <select name="price" onChange={handlePriceChange}>
-                  <option value="12-26">$12-26</option>
-                  <option value="26-36">$26-36</option>
-                  <option value="36-56">$36-56</option>
-                  <option value="57-77">$57-77</option>
-                  <option value="78-97">$78-97</option>
-                  <option value="98-112">$98-112</option>
+                  <option value="1200-2600">$1200-2600</option>
+                  <option value="2600-3600">$2600-3600</option>
+                  <option value="3600-5600">$3600-5600</option>
+                  <option value="5700-7700">$5700-7700</option>
+                  <option value="7800-9700">$7800-9700</option>
+                  <option value="9800-11200">$9800-11200</option>
                 </select>
               </div>
               <div>
@@ -134,7 +136,7 @@ SetData(FilteredData)
                       </div>
                       <div id="price_heart">
                         <p><strong>{price}</strong>/month</p>
-                        <Fevorite id={id} data={data}/>
+                        <Fevorite id={id} data={data} fevProperty={fevProperty} setfevProperty={setfevProperty} />
                       </div>
                       <h3 id="property">{PropertName}</h3>
                       <p id="adress" >{adress}</p>

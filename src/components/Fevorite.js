@@ -2,39 +2,40 @@ import React, { useState } from "react";
 
 import '../App.css'
 
-const Fevorite=({id,data})=>{
+const Fevorite = ({ id, data, fevProperty, setfevProperty }) => {
+  const [color, setcolor] = useState(false)
+  let fevArray = [];
+  function Cart(e) {
 
-  // let fevArray=[];
-    const [color, setcolor] = useState(false)
-    const [fevProperty, setfevProperty]=useState([])
-// console.log((id));
-// console.log((data));
 
-  function Cart() {
-    let fevArray=[];
     if (color === false) {
-      setcolor(true)
-
       const property = data.find(item => item.id === id);
-      setfevProperty(property);
+      setfevProperty([...fevProperty, property]);
       fevArray.push(property)
-      localStorage.setItem("Fevorite",JSON.stringify(property))
+      setcolor(!color)
     }
     else {
-      setcolor(false)
+      setcolor(!color)
+      let removeFev = fevProperty;
+      removeFev = removeFev.filter((remove) => remove.id !== id)
+      setfevProperty(removeFev);
     }
-    
-  }
-  
 
-  
-    return(
-        <>
-            <div id="fevIcon">
-            {color ? <i className="fa fa-heart" value={id} style={{ color: "red" }} onClick={Cart}></i> : <i className="fa fa-heart-o" style={{ color: "black" }} onClick={Cart}></i>}
-            </div>
-        </>
-    )
+
+
+
+  }
+
+
+
+  return (
+    <>
+      <div id="fevIcon">
+        {color ? <i className="fa fa-heart" value={id} onClick={Cart}></i> : <i className="fa fa-heart-o" onClick={Cart}></i>}
+
+      </div>
+    </>
+  )
 }
 
 export default Fevorite;
