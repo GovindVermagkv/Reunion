@@ -15,7 +15,7 @@ const Reunion = ({ favProperty, setFavProperty }) => {
 
   const [item, setItem] = useState([])  
 
-  const [price, setPrice] = useState({ "lowerlimit": null, "upperlimit": null, })
+  const [price, setPrice] = useState({ "lowerLimit": null, "upperLimit": null, })
 
   const [filter, setFilter] = useState({  //will all three state's value store in filter
     "Location": "",
@@ -47,8 +47,8 @@ const Reunion = ({ favProperty, setFavProperty }) => {
 
   const handlePriceChange = (e) => { // will handle price
     setPrice({
-      lowerlimit: parseInt(e.target.value.split("-")[0]), //price will be in [$12,23]
-      upperlimit: parseInt(e.target.value.split("-")[1])
+      lowerLimit: parseInt(e.target.value.split("-")[0]), //price will be in [$12,23]
+      upperLimit: parseInt(e.target.value.split("-")[1])
     })
   }
 
@@ -56,6 +56,9 @@ const Reunion = ({ favProperty, setFavProperty }) => {
     return (parseInt(number.split("$")[1].replace(/,/g, "")))
   }
 
+  const handleQuery=(e)=>{
+    setQuery(e.target.value)
+  }
 
 
 
@@ -65,7 +68,7 @@ const Reunion = ({ favProperty, setFavProperty }) => {
     const FilteredData = searchedData.filter((result)=>{
       if((filter.Location==="" || result.city===filter.Location) && 
       (filter.Type==="" || result.category===filter.Type) && 
-      (price.lowerlimit ===null || price.upperlimit===null || price.lowerlimit < convertToNumber(result.price) && convertToNumber(result.price) < price.upperlimit) &&
+      (price.lowerLimit ===null || price.upperLimit===null || price.lowerLimit < convertToNumber(result.price) && convertToNumber(result.price) < price.upperLimit) &&
       (filter.date==="" ||result.date<=filter.date)){
         return result;
       }
@@ -83,7 +86,7 @@ const Reunion = ({ favProperty, setFavProperty }) => {
           <main>
             <div id="Searchbar">
               <h1>Search Property To Rent</h1>
-              <input type={"text"} placeholder="Search" onChange={(e) => setQuery(e.target.value)} />
+              <input type={"text"} placeholder="Search" onChange={handleQuery} />
             </div>
 
             <div id="filter_section">

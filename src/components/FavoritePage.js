@@ -22,9 +22,9 @@ const FavoritePage = ({ favProperty, setFavProperty }) => {
               <h3 id="property">{PropertName}</h3>
               <p id="adress" >{adress}</p>
               <div id="services">
-                <p><i className="fa fa-bed"></i>{bed} Bed</p>
-                <p> <i className="fa fa-shower"></i>{bathroom} Bathroom</p>
-                <p> <i className="fa fa-circle-o"></i>{area} Area</p>
+                <p><i className="fa fa-bed"/>{bed} Bed</p>
+                <p> <i className="fa fa-shower"/>{bathroom} Bathroom</p>
+                <p> <i className="fa fa-circle-o"/>{area} Area</p>
 
               </div>
             </div>

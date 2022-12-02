@@ -16,9 +16,9 @@ const Property = ({ item, data, favProperty, setFavProperty }) => {
         <h3 id="property">{item.PropertName}</h3>
         <p id="adress" >{item.adress}</p>
         <div id="services">
-          <p><i className="fa fa-bed"></i>{item.bed} Bed</p>
-          <p> <i className="fa fa-shower"></i>{item.bathroom} Bathroom</p>
-          <p> <i className="fa fa-circle-o"></i>{item.area} Area</p>
+          <p><i className="fa fa-bed"/>{item.bed} Bed</p>
+          <p> <i className="fa fa-shower"/>{item.bathroom} Bathroom</p>
+          <p> <i className="fa fa-circle-o"/>{item.area} Area</p>
           <p>{item.date}</p>
 
         </div>

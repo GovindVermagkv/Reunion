@@ -13,7 +13,7 @@ const Header = ({ favProperty }) => {
         <header>
           <div id="logo_nav">
             <div id="logo">
-              <i className="fa fa-home"></i>
+              <i className="fa fa-home"/>
               <p>Reunion</p>
             </div>
             <div id="navbar">
@@ -21,8 +21,8 @@ const Header = ({ favProperty }) => {
                 <li><Link to={"/"} id="link">Rent</Link></li>
                 <li>Buy</li>
                 <li>Sell</li>
-                <li>Manage Property <i className="fa fa-angle-down"></i></li>
-                <li>Resources <i className="fa fa-angle-down"></i></li>
+                <li>Manage Property <i className="fa fa-angle-down"/></li>
+                <li>Resources <i className="fa fa-angle-down"/></li>
               </ul>
             </div>
           </div>
@@ -30,7 +30,7 @@ const Header = ({ favProperty }) => {
           <div id="credential">
             <button>LogIn</button>
             <button>Sign Up</button>
-            <Link to={"favoritepage"} ><button id="fevorite_icon"><i className="fa fa-heart-o"></i><sup>{favLength}</sup></button></Link>
+            <Link to="favoritepage" ><button id="fevorite_icon"><i className="fa fa-heart-o"/><sup>{favLength}</sup></button></Link>
           </div>
         </header>
 
