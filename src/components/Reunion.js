@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
 
-import Fevorite from "./Fevorite";
+import Property from "./Property";
 
 import '../App.css'
 
 
-const Reunion = ({fevProperty,setfevProperty}) => {
+const Reunion = ({ favProperty, setFavProperty }) => {
 
-  const [SearchedData, SetSearchedData] = useState([]);
+  const [searchedData, setSearchedData] = useState([]);  //input value result will store 
 
-  const [data, SetData] = useState([]);
-  const [query, setquery] = useState("");
+  const [data, SetData] = useState([]); //initial fetched data
+  const [query, setQuery] = useState("");  //input value
 
-  const [item, setItem] = useState([])
+  const [item, setItem] = useState([])  
 
-  const [price, setprice] = useState({ "lowerlimit": null, "upperlimit": null, })
+  const [price, setPrice] = useState({ "lowerlimit": null, "upperlimit": null, })
 
-  const [filter, setfilter] = useState({
+  const [filter, setFilter] = useState({  //will all three state's value store in filter
     "Location": "",
     "Type": "",
     "date": "",
@@ -31,45 +31,45 @@ const Reunion = ({fevProperty,setfevProperty}) => {
       .then((responce) => {
         SetData(responce.data);
         setItem(responce.data)
-        SetSearchedData(responce.data)
+        setSearchedData(responce.data)
       })
-  }, [])
+  }, [])  // for data from api
 
 
   useEffect(() => {
-    SetSearchedData(item.filter(user => user.PropertName.toLowerCase().includes(query)))
+    setSearchedData(item.filter(user => user.PropertName.toLowerCase().includes(query)))
     SetData(item.filter(user => user.PropertName.toLowerCase().includes(query)))
-
-  }, [query])
-
+  }, [query])  // for render searched data
+  
   const handleChange = (e) => {
-    setfilter({ ...filter, [e.target.name]: e.target.value })
-
-
+    setFilter({ ...filter, [e.target.name]: e.target.value })  // will handle the value of location,type & date functionality
   }
-  const handlePriceChange = (e) => {
-    setprice({
-      lowerlimit: parseInt(e.target.value.split("-")[0]),
+
+  const handlePriceChange = (e) => { // will handle price
+    setPrice({
+      lowerlimit: parseInt(e.target.value.split("-")[0]), //price will be in [$12,23]
       upperlimit: parseInt(e.target.value.split("-")[1])
     })
-
   }
 
-  const convertToNumber = (number) => {
+  const convertToNumber = (number) => { //will convert [$12-23] to 1223
     return (parseInt(number.split("$")[1].replace(/,/g, "")))
   }
 
 
 
 
-  const filterSearch = () => {
 
-    const FilteredData = SearchedData.filter((result) => {
-      if ((filter.Location === "" || result.city === filter.Location) &&
-        (filter.Type === "" || result.category === filter.Type) &&
-        (((price.lowerlimit === null) || (price.upperlimit === null) || (price.lowerlimit < convertToNumber(result.price))) && (convertToNumber(result.price) < price.upperlimit))) {
+  const filterSearch = () => { //filter function will follow this conditions
+
+    const FilteredData = searchedData.filter((result)=>{
+      if((filter.Location==="" || result.city===filter.Location) && 
+      (filter.Type==="" || result.category===filter.Type) && 
+      (price.lowerlimit ===null || price.upperlimit===null || price.lowerlimit < convertToNumber(result.price) && convertToNumber(result.price) < price.upperlimit) &&
+      (filter.date==="" ||result.date<=filter.date)){
         return result;
       }
+
     })
     SetData(FilteredData)
   }
@@ -83,7 +83,7 @@ const Reunion = ({fevProperty,setfevProperty}) => {
           <main>
             <div id="Searchbar">
               <h1>Search Property To Rent</h1>
-              <input type={"text"} placeholder="Search" onChange={(e) => setquery(e.target.value)} />
+              <input type={"text"} placeholder="Search" onChange={(e) => setQuery(e.target.value)} />
             </div>
 
             <div id="filter_section">
@@ -94,7 +94,7 @@ const Reunion = ({fevProperty,setfevProperty}) => {
                   <option value="Lucknow">Lucknow</option>
                   <option value="Delhi">Delhi</option>
                   <option value="Mumbai">Mumbai</option>
-                  <option value="Noida">noida</option>
+                  <option value="Noida">Noida</option>
                   <option value="Gorakhpur">Gorakhpur</option>
                 </select>
               </div>
@@ -127,27 +127,9 @@ const Reunion = ({fevProperty,setfevProperty}) => {
 
             <div id="property_container">
 
-              {data.map(({ image, price, adress, PropertName, bathroom, bed, area, city, id }) => {
+              {data.map((item) => {
                 return (
-                  <>
-                    <div id="property_box" className={city} key={id}>
-                      <div id="image">
-                        <img src={image} alt="" />
-                      </div>
-                      <div id="price_heart">
-                        <p><strong>{price}</strong>/month</p>
-                        <Fevorite id={id} data={data} fevProperty={fevProperty} setfevProperty={setfevProperty} />
-                      </div>
-                      <h3 id="property">{PropertName}</h3>
-                      <p id="adress" >{adress}</p>
-                      <div id="services">
-                        <p><i className="fa fa-bed"></i>{bed} Bed</p>
-                        <p> <i className="fa fa-shower"></i>{bathroom} Bathroom</p>
-                        <p> <i className="fa fa-circle-o"></i>{area} Area</p>
-
-                      </div>
-                    </div>
-                  </>
+                  <Property key={item.id} item={item} data={data} favProperty={favProperty} setFavProperty={setFavProperty} />
                 )
               })}
             </div>

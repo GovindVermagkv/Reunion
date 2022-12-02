@@ -3,9 +3,9 @@ import { Outlet, Link } from "react-router-dom";
 
 import '../App.css'
 
-const Header = ({fevProperty}) => {
+const Header = ({ favProperty }) => {
 
-  let fevlength = fevProperty.length
+  let favLength = favProperty.length
 
   return (
     <>
@@ -30,7 +30,7 @@ const Header = ({fevProperty}) => {
           <div id="credential">
             <button>LogIn</button>
             <button>Sign Up</button>
-            <Link to={"fevoritepage"} ><button id="fevorite_icon"><i className="fa fa-heart-o"></i><sup>{fevlength}</sup></button></Link>
+            <Link to={"favoritepage"} ><button id="fevorite_icon"><i className="fa fa-heart-o"></i><sup>{favLength}</sup></button></Link>
           </div>
         </header>
 

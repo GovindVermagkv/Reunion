@@ -1,16 +1,14 @@
 import React from "react";
 
-import Fevorite from "./Fevorite";
+import Favorite from "./Favorite";
 
 import '../App.css'
 
-const FevoritePage = ({ fevProperty, setfevProperty }) => {
-
-
+const FavoritePage = ({ favProperty, setFavProperty }) => {
   return (
     <>
     <div id="property_container">
-      {fevProperty.map(({ image, price, adress, PropertName, bathroom, bed, area, city, id }) => {
+      {favProperty.map(({ image, price, adress, PropertName, bathroom, bed, area, city, id }) => {
         return (
           <>
             <div id="property_box">
@@ -19,7 +17,7 @@ const FevoritePage = ({ fevProperty, setfevProperty }) => {
               </div>
               <div id="price_heart">
                 <p><strong>{price}</strong>/month</p>
-                <Fevorite id={id} data={fevProperty} fevProperty={fevProperty} setfevProperty={setfevProperty} />
+                <Favorite  like={true} id={id} data={favProperty} favProperty={favProperty} setFavProperty={setFavProperty} />
               </div>
               <h3 id="property">{PropertName}</h3>
               <p id="adress" >{adress}</p>
@@ -37,4 +35,4 @@ const FevoritePage = ({ fevProperty, setfevProperty }) => {
     </>
   )
 }
-export default FevoritePage;
+export default FavoritePage;
